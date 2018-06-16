@@ -1,0 +1,48 @@
+1. sudo apt-get update
+
+2. sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+
+	If it is produce some error,to use this commend --> sudo apt-get -f install
+
+3. curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+4. sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+5. sudo apt-get update
+
+6. sudo apt-get install docker-ce
+
+7. apt-cache madison docker-ce
+
+8. sudo docker run hello-world
+
+9. sudo docker pull eosio/eos-dev
+
+10. sudo docker run --rm --name eosio -d -p 8888:8888 -p 9876:9876 -v /tmp/work:/work -v /tmp/eosio/data:/mnt/dev/data -v /tmp/eosio/config:/mnt/dev/config eosio/eos-dev  /bin/bash -c "nodeos -e -p eosio --plugin eosio::wallet_api_plugin --plugin eosio::wallet_plugin --plugin eosio::producer_plugin --plugin eosio::history_plugin --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin --plugin eosio::http_plugin -d /mnt/dev/data --config-dir /mnt/dev/config --http-server-address=0.0.0.0:8888 --access-control-allow-origin=* --contracts-console"
+
+11. sudo docker logs --tail 10 eosio
+
+12. In browser:  http://localhost:8888/v1/chain/get_info
+
+13. alias cleos='docker exec eosio /opt/eosio/bin/cleos --wallet-url http://localhost:8888'
+
+14. cleos --help
+
+	It show this error:
+
+	Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.37/containers/eosio/json: dial unix /var/run/docker.sock: connect: permission denied
+
+15. sudo chmod 666 /var/run/docker.sock
+
+16. cleos --help
+
+17. docker stop eosio
+
